@@ -26,16 +26,16 @@
         .tab-btn {
             flex: 1;
             padding: 10px;
-            border: 1px solid var(--color-principal);
+            border: 1px solid var(--color-principal, #2c5e3b);
             background: #f0f0f0;
-            color: var(--color-texto);
+            color: var(--color-texto, #333);
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
         }
 
         .tab-btn.active {
-            background: var(--color-principal);
+            background: var(--color-principal, #2c5e3b);
             color: white;
         }
 
@@ -44,7 +44,7 @@
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
-            border: 1px dashed var(--color-secundario);
+            border: 1px dashed var(--color-secundario, #d4a373);
             text-align: center;
         }
 
@@ -55,15 +55,28 @@
         .form-section.active {
             display: block;
         }
+
+        .error-msg {
+            color: #e63946;
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 5px;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Cabañas Huka</h1>
+        <!-- Logo clickeable apuntando al Inicio -->
+        <a href="./index.html" class="logo-link">
+            <img src="./logo_Huka.png" alt="Cabañas Huka" class="logo">
+        </a>
+
         <nav>
             <ul>
                 <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./cabanas.html">Nuestras Cabañas</a></li>
+                <li><a href="./formulario.html">Reservas y Contacto</a></li>
             </ul>
         </nav>
     </header>
@@ -122,6 +135,7 @@
 
     <footer>
         <p>&copy; 2026 Cabañas Huka. Todos los derechos reservados.</p>
+        <p>Contacto: info@cabanas-huka.cl | Teléfono: +56 9 8180 0828</p>
     </footer>
 
     <!-- LÓGICA DE NAVEGACIÓN Y AUTENTICACIÓN -->

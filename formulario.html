@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Cabañas Huka</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <header>
-        <h1>Cabañas Huka</h1>
+        <!-- Logo clickeable apuntando al Inicio -->
+        <a href="./index.html" class="logo-link">
+            <img src="./logo_Huka.png" alt="Cabañas Huka" class="logo">
+        </a>
+
         <nav>
             <ul>
                 <li><a href="./index.html">Inicio</a></li>
                 <li><a href="./cabanas.html">Nuestras Cabañas</a></li>
                 <li><a href="./formulario.html">Reservas y Contacto</a></li>
-                <li><a href="./admin.html">Admin</a></li>
-                <li><a href="./login.html">Acceso / Admin</a></li>
+                
+                <!-- Gestión dinámicas de sesión -->
+                <li id="menuAcceso"><a href="./login.html">Ingresar / Acceso</a></li>
+                <li id="menuCerrarSesion" style="display: none;">
+                    <a href="#" onclick="cerrarSesionUsuario()" style="color: #e63946;">Cerrar Sesión</a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -61,6 +71,29 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        // --- Control de Sesión ---
+        document.addEventListener("DOMContentLoaded", function () {
+            const usuarioSesion = localStorage.getItem("usuarioHuka");
+            const menuAcceso = document.getElementById("menuAcceso");
+            const menuCerrarSesion = document.getElementById("menuCerrarSesion");
+
+            if (usuarioSesion) {
+                if (menuAcceso) menuAcceso.style.display = "none";
+                if (menuCerrarSesion) menuCerrarSesion.style.display = "inline-block";
+            } else {
+                if (menuAcceso) menuAcceso.style.display = "inline-block";
+                if (menuCerrarSesion) menuCerrarSesion.style.display = "none";
+            }
+        });
+
+        function cerrarSesionUsuario() {
+            localStorage.removeItem("usuarioHuka");
+            localStorage.removeItem("nombreHuka");
+            alert("Has cerrado sesión correctamente.");
+            window.location.href = "./login.html";
+        }
+
+        // --- Validaciones y Envío del Formulario ---
         const nombre = document.getElementById("nombre");
         const email = document.getElementById("email");
         const telefono = document.getElementById("telefono");
