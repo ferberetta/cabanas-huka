@@ -12,18 +12,13 @@
 
 <body>
     <header>
-        <h1>Cabañas Huka</h1>
+        <img src="./logo_Huka.png" alt="Cabañas Huka" class="logo" width="150">
         <nav>
             <ul>
                 <li><a href="./index.html">Inicio</a></li>
                 <li><a href="./cabanas.html">Nuestras Cabañas</a></li>
                 <li><a href="./formulario.html">Reservas y Contacto</a></li>
-                
-                <!-- Gestión de Acceso y Sesión -->
-                <li id="menuAcceso"><a href="./login.html">Ingresar / Acceso</a></li>
-                <li id="menuCerrarSesion" style="display: none;">
-                    <a href="#" onclick="cerrarSesionUsuario()" style="color: #e63946;">Cerrar Sesión</a>
-                </li>
+                <li><a href="./admin.html">Admin</a></li>
             </ul>
         </nav>
     </header>
@@ -40,7 +35,7 @@
             <div class="media-box">
                 <h3>Conoce nuestras cabañas</h3>
                 <video controls playsinline preload="metadata" class="chat-video">
-                    <source src="./cabana.mp4" type="video/mp4">
+                    <source src="/cabana.mp4" type="video/mp4">
                     Tu navegador no soporta videos.
                 </video>
             </div>
@@ -76,32 +71,8 @@
         <p>Contacto: info@cabanas-huka.cl | Teléfono: +56 9 8180 0828</p>
     </footer>
 
-    <!-- Lógica del Asistente Virtual y Gestión de Sesión -->
+    <!-- Lógica del Asistente Virtual -->
     <script>
-        // Comprobar estado de la sesión al cargar
-        document.addEventListener("DOMContentLoaded", function () {
-            const usuarioSesion = localStorage.getItem("usuarioHuka");
-            const menuAcceso = document.getElementById("menuAcceso");
-            const menuCerrarSesion = document.getElementById("menuCerrarSesion");
-
-            if (usuarioSesion) {
-                if (menuAcceso) menuAcceso.style.display = "none";
-                if (menuCerrarSesion) menuCerrarSesion.style.display = "inline-block";
-            } else {
-                if (menuAcceso) menuAcceso.style.display = "inline-block";
-                if (menuCerrarSesion) menuCerrarSesion.style.display = "none";
-            }
-        });
-
-        // Función para cerrar sesión y redirigir al Login
-        function cerrarSesionUsuario() {
-            localStorage.removeItem("usuarioHuka");
-            localStorage.removeItem("nombreHuka");
-            alert("Has cerrado sesión correctamente.");
-            window.location.href = "./login.html";
-        }
-
-        // Asistente Virtual
         function sendMessage() {
             const input = document.getElementById('userInput');
             const messageText = input.value.trim();
