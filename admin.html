@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Cabañas Huka</title>
     <link rel="stylesheet" href="./style.css">
+
+    <!-- Verificación de Seguridad (@huka.com) -->
+    <script>
+        const usuarioSesion = localStorage.getItem("usuarioHuka");
+        if (!usuarioSesion || !usuarioSesion.endsWith("@huka.com")) {
+            alert("Acceso denegado: Esta zona es exclusiva para administradores (@huka.com).");
+            window.location.href = "./login.html";
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -12,14 +21,14 @@
         <nav>
             <ul>
                 <li><a href="./index.html">Ver Sitio Web</a></li>
-                <li><a href="./admin.html">Administración</a></li>
+                <li><a href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <h2>Gestionar Solicitudes de Reserva</h2>
-        <p>Bienvenido, Administrador. Aquí puedes revisar las reservas entrantes.</p>
+        <p>Sesión activa: <strong id="correoUsuario" style="color: var(--color-principal);"></strong></p>
 
         <!-- Tabla de Reservas del Administrador -->
         <table border="1" style="width:100%; text-align:left; border-collapse:collapse; background:#fff; margin-top:20px;">
@@ -61,5 +70,15 @@
     <footer>
         <p>&copy; 2026 Cabañas Huka. Vista Administrador.</p>
     </footer>
+
+    <!-- Lógica para mostrar correo activo y cerrar sesión -->
+    <script>
+        document.getElementById("correoUsuario").textContent = localStorage.getItem("usuarioHuka");
+
+        function cerrarSesion() {
+            localStorage.removeItem("usuarioHuka");
+            window.location.href = "./login.html";
+        }
+    </script>
 </body>
 </html>

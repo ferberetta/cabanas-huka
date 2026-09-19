@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso - Cabañas Huka</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .login-card {
+            max-width: 420px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d4a373;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--color-principal);
+            background: #f0f0f0;
+            color: var(--color-texto);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            background: var(--color-principal);
+            color: white;
+        }
+
+        .guest-box {
+            background-color: #faf9f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px dashed var(--color-secundario);
+            text-align: center;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Cabañas Huka</h1>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-card">
+            <h2>Bienvenido</h2>
+            <p>Selecciona una opción para continuar:</p>
+
+            <!-- Botones para alternar entre Registro e Iniciar Sesión -->
+            <div class="tab-buttons">
+                <button type="button" class="tab-btn active" id="btnTabLogin" onclick="mostrarTab('login')">Iniciar Sesión</button>
+                <button type="button" class="tab-btn" id="btnTabRegistro" onclick="mostrarTab('registro')">Registrarse</button>
+            </div>
+
+            <!-- FORMULARIO 1: INICIAR SESIÓN (Clientes y Admin) -->
+            <div id="sectionLogin" class="form-section active">
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico:</label>
+                    <input type="email" id="loginEmail" placeholder="correo@ejemplo.com o admin@huka.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPass">Contraseña:</label>
+                    <input type="password" id="loginPass" placeholder="••••••••">
+                </div>
+                <span class="error-msg" id="errorLogin"></span>
+                <button onclick="iniciarSesion()" class="btn" style="width: 100%; margin-top: 10px;">Ingresar</button>
+            </div>
+
+            <!-- FORMULARIO 2: REGISTRO DE USUARIO NUEVO -->
+            <div id="sectionRegistro" class="form-section">
+                <div class="form-group">
+                    <label for="regNombre">Nombre completo:</label>
+                    <input type="text" id="regNombre" placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Correo electrónico:</label>
+                    <input type="email" id="regEmail" placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="regPass">Contraseña:</label>
+                    <input type="password" id="regPass" placeholder="Crea una contraseña">
+                </div>
+                <span class="error-msg" id="errorRegistro"></span>
+                <button onclick="registrarUsuario()" class="btn" style="width: 100%; margin-top: 10px;">Crear Cuenta</button>
+            </div>
+
+            <!-- OPCIÓN 3: ACCESO DIRECTO COMO INVITADO -->
+            <div class="guest-box">
+                <p style="margin-top: 0; font-weight: bold;">¿No deseas registrarte?</p>
+                <p style="font-size: 0.85rem; color: #555;">Puedes explorar la web y realizar reservas directamente como cliente invitado.</p>
+                <a href="./index.html" class="btn" style="background-color: #888; width: 80%; display: inline-block;">Entrar como Invitado</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Cabañas Huka. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- LÓGICA DE NAVEGACIÓN Y AUTENTICACIÓN -->
+    <script>
+        // Cambiar entre pestaña de Login y Registro
+        function mostrarTab(tab) {
+            const sectionLogin = document.getElementById("sectionLogin");
+            const sectionRegistro = document.getElementById("sectionRegistro");
+            const btnTabLogin = document.getElementById("btnTabLogin");
+            const btnTabRegistro = document.getElementById("btnTabRegistro");
+
+            if (tab === 'login') {
+                sectionLogin.classList.add("active");
+                sectionRegistro.classList.remove("active");
+                btnTabLogin.classList.add("active");
+                btnTabRegistro.classList.remove("active");
+            } else {
+                sectionRegistro.classList.add("active");
+                sectionLogin.classList.remove("active");
+                btnTabRegistro.classList.add("active");
+                btnTabLogin.classList.remove("active");
+            }
+        }
+
+        // Lógica para registrar un usuario común
+        function registrarUsuario() {
+            const nombre = document.getElementById("regNombre").value.trim();
+            const email = document.getElementById("regEmail").value.trim().toLowerCase();
+            const pass = document.getElementById("regPass").value.trim();
+            const error = document.getElementById("errorRegistro");
+
+            if (nombre === "" || email === "" || pass === "") {
+                error.textContent = "Por favor completa todos los campos.";
+                return;
+            }
+
+            if (!email.includes("@") || !email.endsWith(".com")) {
+                error.textContent = "Ingresa un correo válido (debe incluir @ y terminar en .com).";
+                return;
+            }
+
+            // Guardar datos en localStorage
+            localStorage.setItem("usuarioHuka", email);
+            localStorage.setItem("nombreHuka", nombre);
+            error.textContent = "";
+
+            alert("¡Registro exitoso! Redirigiendo a la página principal...");
+            window.location.href = "./index.html";
+        }
+
+        // Lógica para iniciar sesión (Detecta si es Admin @huka.com o Cliente)
+        function iniciarSesion() {
+            const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+            const pass = document.getElementById("loginPass").value.trim();
+            const error = document.getElementById("errorLogin");
+
+            if (email === "" || pass === "") {
+                error.textContent = "Ingresa tu correo y contraseña.";
+                return;
+            }
+
+            // Si es un Administrador
+            if (email.endsWith("@huka.com")) {
+                localStorage.setItem("usuarioHuka", email);
+                alert("Bienvenido Administrador.");
+                window.location.href = "./admin.html";
+            } 
+            // Si es un Cliente registrado/común
+            else if (email.includes("@") && email.endsWith(".com")) {
+                localStorage.setItem("usuarioHuka", email);
+                alert("Inicio de sesión exitoso.");
+                window.location.href = "./index.html";
+            } else {
+                error.textContent = "Correo no válido. Recuerda que debe incluir @ y terminar en .com.";
+            }
+        }
+    </script>
+</body>
+
+</html>
