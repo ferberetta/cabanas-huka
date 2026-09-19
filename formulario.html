@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Cabañas Huka</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h1>Cabañas Huka</h1>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./cabanas.html">Nuestras Cabañas</a></li>
+                <li><a href="./formulario.html">Reservas y Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Reserva de Cabaña</h2>
+        <form id="formReserva">
+            <div class="form-group">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre">
+                <span class="error-msg" id="errorNombre"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="text" id="email">
+                <span class="error-msg" id="errorEmail"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono de contacto:</label>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <span style="font-weight: bold;">+56</span>
+                    <input type="tel" id="telefono" maxlength="9" placeholder="912345678">
+                </div>
+                <span class="error-msg" id="errorTelefono"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="personas">Cantidad de huéspedes:</label>
+                <input type="number" id="personas">
+                <span class="error-msg" id="errorPersonas"></span>
+            </div>
+
+            <button type="button" id="btnValidar" class="btn">Enviar Solicitar Reserva</button>
+            <div id="mensajeExito" class="exito-msg"></div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Cabañas Huka. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const nombre = document.getElementById("nombre");
+        const email = document.getElementById("email");
+        const telefono = document.getElementById("telefono");
+        const personas = document.getElementById("personas");
+        const boton = document.getElementById("btnValidar");
+
+        const errorNombre = document.getElementById("errorNombre");
+        const errorEmail = document.getElementById("errorEmail");
+        const errorTelefono = document.getElementById("errorTelefono");
+        const errorPersonas = document.getElementById("errorPersonas");
+        const mensajeExito = document.getElementById("mensajeExito");
+
+        boton.addEventListener("click", function () {
+
+            // 1. Validar Nombre
+            if (nombre.value.trim() == "") {
+                errorNombre.textContent = "Debes ingresar tu nombre";
+            } else {
+                errorNombre.textContent = "";
+            }
+
+            // 2. Validar Email con @ y .com
+            const correo = email.value.toLowerCase().trim();
+            if (!correo.includes("@") || !correo.endsWith(".com")) {
+                errorEmail.textContent = "El email debe incluir @ y terminar en .com";
+            } else {
+                errorEmail.textContent = "";
+            }
+
+            // 3. Validar Teléfono (exactamente 9 dígitos y solo números)
+            const numTelefono = telefono.value.trim();
+
+            if (numTelefono.length != 9 || isNaN(numTelefono)) {
+                errorTelefono.textContent = "Ingresa exactamente 9 números";
+            } else {
+                errorTelefono.textContent = "";
+            }
+
+            // 4. Validar Personas
+            if (personas.value.trim() == "" || personas.value < 1) {
+                errorPersonas.textContent = "Ingresa al menos 1 persona";
+            } else {
+                errorPersonas.textContent = "";
+            }
+
+            // 5. Mensaje final y redirección a WhatsApp si todo está bien
+            if (nombre.value.trim() != "" && correo.includes("@") && correo.endsWith(".com") && numTelefono.length == 9 && !isNaN(numTelefono) && personas.value >= 1) {
+                
+                mensajeExito.textContent = "¡Redirigiendo a WhatsApp...";
+
+                const numeroEmpresa = "56981800828"; 
+                
+                const texto = "Hola Cabañas Huka, quiero solicitar una reserva:\n" +
+                              "- Nombre: " + nombre.value + "\n" +
+                              "- Correo: " + correo + "\n" +
+                              "- Teléfono: +56" + numTelefono + "\n" +
+                              "- Huéspedes: " + personas.value;
+
+                window.open("https://wa.me/" + numeroEmpresa + "?text=" + encodeURIComponent(texto), "_blank");
+
+            } else {
+                mensajeExito.textContent = "";
+            }
+
+        });
+    </script>
+</body>
+</html>
