@@ -1,179 +1,198 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES (PALETA DE COLORES Y FUENTES)
+   ========================================================================== */
 :root {
-    --color-principal: #2e5a44;
-    --color-secundario: #d4a373;
-    --color-fondo: #fefae0;
-    --color-texto: #333333;
-    --color-error: #e63946;
+    --color-principal: #2d5a27;       /* Verde bosque principal */
+    --color-secundario: #d4a373;      /* Tono madera/tierra para botones y bordes */
+    --color-fondo: #fcfbf7;           /* Fondo suave crema/marfil */
+    --color-texto: #2d3748;           /* Texto oscuro legible */
+    --color-blanco: #ffffff;
+    --color-hover: #1e3d1a;
 }
 
+/* ==========================================================================
+   2. ESTILOS BASE Y ESTRUCTURA GENERAL
+   ========================================================================== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-fondo);
     color: var(--color-texto);
-}
-
-header {
-    background-color: var(--color-principal);
-    color: white;
-    padding: 1rem;
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
+    flex-direction: column;
 }
 
 main {
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    flex: 1;
 }
 
-.btn {
-    background-color: var(--color-secundario);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* ==========================================================================
+   3. CABECERA (HEADER) Y NAVEGACIÓN
+   ========================================================================== */
+header {
+    background-color: var(--color-principal);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* Estilo para que el texto/logo sea clickeable al inicio */
+header h1 a.logo-link,
+header a img.logo {
+    color: var(--color-blanco);
     text-decoration: none;
     display: inline-block;
+    vertical-align: middle;
 }
 
-.btn:hover {
+header h1 a.logo-link:hover,
+header a img.logo:hover {
     opacity: 0.9;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.error-msg {
-    color: var(--color-error);
-    font-size: 0.85rem;
-    display: block;
-    margin-top: 5px;
-}
-
-footer {
-    background-color: #1a3325;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: 40px;
-}
-
-/* Contenedor flexible */
-.media-container {
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 25px;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--color-blanco);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--color-secundario);
+}
+
+/* ==========================================================================
+   4. COMPONENTES: BOTONES Y HERO
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    background-color: var(--color-secundario);
+    color: var(--color-blanco);
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #bc8a5f;
+}
+
+.hero {
+    text-align: center;
+    padding: 30px 10px;
+}
+
+.hero h2 {
+    color: var(--color-principal);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   5. SECCIÓN MULTIMEDIA (VIDEO, MAPA Y CHAT IA)
+   ========================================================================== */
+.media-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     margin-top: 20px;
 }
 
+@media (max-width: 768px) {
+    .media-container {
+        grid-template-columns: 1fr;
+    }
+}
+
 .media-box {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
+    background: var(--color-blanco);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Columna del video comprimida */
-.media-box:has(video) {
-    max-width: 230px; /* Controla el ancho del video para hacerlo más pequeño */
+.media-box h3 {
+    margin-top: 0;
+    color: var(--color-principal);
 }
 
-/* Video vertical intacto */
-.media-box video, 
+/* Asegurar que el video se ajuste correctamente al contenedor */
 .chat-video {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    display: block;
+    background-color: #000;
 }
 
-/* Mapa alineado */
-.media-box iframe {
-    width: 100%;
-    height: 180px;
-    border-radius: 8px;
-}
-
-/* Panel de Chat Interactivo */
+/* Panel del Asistente Virtual */
 .chat-box {
-    background: #ffffff;
-    border: 1px solid #d4a373;
+    margin-top: 15px;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background: #fdfdfd;
 }
 
 .chat-header {
-    background-color: var(--color-principal);
+    background: var(--color-principal);
     color: white;
-    padding: 8px 12px;
-    font-size: 0.85rem;
+    padding: 10px;
     font-weight: bold;
 }
 
 .chat-messages {
-    height: 110px;
-    padding: 10px;
+    height: 150px;
     overflow-y: auto;
-    font-size: 0.85rem;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #faf9f5;
-}
-
-.bot-msg, .user-msg {
-    margin: 0;
-    padding: 6px 10px;
-    border-radius: 6px;
-    max-width: 85%;
-    line-height: 1.3;
 }
 
 .bot-msg {
-    background-color: #e2ece9;
-    color: #1a3325;
+    background: #eaf2e8;
+    color: #1b3817;
+    padding: 8px 12px;
+    border-radius: 12px 12px 12px 0;
+    margin: 0;
+    font-size: 0.9rem;
     align-self: flex-start;
 }
 
 .user-msg {
-    background-color: var(--color-secundario);
+    background: var(--color-secundario);
     color: white;
+    padding: 8px 12px;
+    border-radius: 12px 12px 0 12px;
+    margin: 0;
+    font-size: 0.9rem;
     align-self: flex-end;
 }
 
@@ -185,32 +204,26 @@ footer {
 .chat-input-area input {
     flex: 1;
     border: none;
-    padding: 8px;
-    font-size: 0.85rem;
+    padding: 10px;
     outline: none;
 }
 
 .chat-input-area button {
-    background-color: var(--color-principal);
+    background: var(--color-principal);
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 10px 15px;
     cursor: pointer;
-    font-size: 0.85rem;
 }
 
-.chat-input-area button:hover {
-    background-color: #1a3325;
-}
-
-/* Dispositivos móviles */
-@media (max-width: 768px) {
-    .media-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .media-box:has(video) {
-        max-width: 100%;
-    }
+/* ==========================================================================
+   6. PIE DE PÁGINA (FOOTER)
+   ========================================================================== */
+footer {
+    background-color: var(--color-principal);
+    color: var(--color-blanco);
+    text-align: center;
+    padding: 15px;
+    margin-top: auto;
+    font-size: 0.9rem;
 }
