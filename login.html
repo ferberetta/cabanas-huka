@@ -138,81 +138,8 @@
         <p>Contacto: info@cabanas-huka.cl | Teléfono: +56 9 8180 0828</p>
     </footer>
 
-    <!-- LÓGICA DE NAVEGACIÓN Y AUTENTICACIÓN -->
-    <script>
-        // Cambiar entre pestaña de Login y Registro
-        function mostrarTab(tab) {
-            const sectionLogin = document.getElementById("sectionLogin");
-            const sectionRegistro = document.getElementById("sectionRegistro");
-            const btnTabLogin = document.getElementById("btnTabLogin");
-            const btnTabRegistro = document.getElementById("btnTabRegistro");
-
-            if (tab === 'login') {
-                sectionLogin.classList.add("active");
-                sectionRegistro.classList.remove("active");
-                btnTabLogin.classList.add("active");
-                btnTabRegistro.classList.remove("active");
-            } else {
-                sectionRegistro.classList.add("active");
-                sectionLogin.classList.remove("active");
-                btnTabRegistro.classList.add("active");
-                btnTabLogin.classList.remove("active");
-            }
-        }
-
-        // Lógica para registrar un usuario común
-        function registrarUsuario() {
-            const nombre = document.getElementById("regNombre").value.trim();
-            const email = document.getElementById("regEmail").value.trim().toLowerCase();
-            const pass = document.getElementById("regPass").value.trim();
-            const error = document.getElementById("errorRegistro");
-
-            if (nombre === "" || email === "" || pass === "") {
-                error.textContent = "Por favor completa todos los campos.";
-                return;
-            }
-
-            if (!email.includes("@") || !email.endsWith(".com")) {
-                error.textContent = "Ingresa un correo válido (debe incluir @ y terminar en .com).";
-                return;
-            }
-
-            // Guardar datos en localStorage
-            localStorage.setItem("usuarioHuka", email);
-            localStorage.setItem("nombreHuka", nombre);
-            error.textContent = "";
-
-            alert("¡Registro exitoso! Redirigiendo a la página principal...");
-            window.location.href = "./index.html";
-        }
-
-        // Lógica para iniciar sesión (Detecta si es Admin @huka.com o Cliente)
-        function iniciarSesion() {
-            const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-            const pass = document.getElementById("loginPass").value.trim();
-            const error = document.getElementById("errorLogin");
-
-            if (email === "" || pass === "") {
-                error.textContent = "Ingresa tu correo y contraseña.";
-                return;
-            }
-
-            // Si es un Administrador
-            if (email.endsWith("@huka.com")) {
-                localStorage.setItem("usuarioHuka", email);
-                alert("Bienvenido Administrador.");
-                window.location.href = "./admin.html";
-            } 
-            // Si es un Cliente registrado/común
-            else if (email.includes("@") && email.endsWith(".com")) {
-                localStorage.setItem("usuarioHuka", email);
-                alert("Inicio de sesión exitoso.");
-                window.location.href = "./index.html";
-            } else {
-                error.textContent = "Correo no válido. Recuerda que debe incluir @ y terminar en .com.";
-            }
-        }
-    </script>
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="./login.js"></script>
 </body>
 
 </html>
